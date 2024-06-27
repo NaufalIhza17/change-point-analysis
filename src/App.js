@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import FileInput from "./components/FileInput";
 
 function App() {
+  const [recSeq, setRecSeq] = useState("");
+  const [metaData, setMetaData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [fileUploaded, setFileUploaded] = useState(false);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <section className="app">
+      <div className="box-placement">
+        <h1 className="label-form">Upload FASTA File</h1>
+        <div className="box-main">
+          <FileInput
+            setRecSeq={setRecSeq}
+            setMetaData={setMetaData}
+            setLoading={setLoading}
+            setFileUploaded={setFileUploaded}
+          />
+        </div>
+
+          <div className="box-main">
+          {loading && (
+              <div className="loading">
+                <div className="spinner"></div>
+              </div>
+            )}
+            {!loading && fileUploaded && (
+              <>
+                <h2>Metadata</h2>
+                <p>ID: {metaData.id}</p>
+                <p>Name: {metaData.name}</p>
+                <p>Organism: {metaData.organism}</p>
+              </>
+            )}
+          </div>
+      </div>
+    </section>
   );
 }
 
